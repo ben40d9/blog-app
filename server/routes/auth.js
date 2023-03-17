@@ -9,16 +9,21 @@ router.post("/register", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = {
-      email,
+    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+    const newUser = new User({
+      email: req.body.email,
       password: hashedPassword,
-    };
+    });
+    await newUser.save();
 
-    const result = await req.db.collection("users").insertOne(newUser);
-    res.status(201).send(result.ops[0]);
+    // Generate a token
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.status(201).json({ token });
   } catch (error) {
-    res.status(500).send({ message: "Error registering user" });
+    res.status(500).json({ error: error.message });
   }
 });
 

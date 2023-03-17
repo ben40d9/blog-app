@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Register = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -12,14 +12,11 @@ const Register = () => {
     setError(null);
     if (email && password) {
       try {
-        const response = await axios.post("/auth/register", {
-          email,
-          password,
-        });
+        const response = await axios.post("/auth/login", { email, password });
         localStorage.setItem("authToken", response.data.token);
         setSuccess(true);
       } catch (error) {
-        setError("Error registering. Please try again.");
+        setError("Error logging in. Please try again.");
       }
     } else {
       setError("Please enter a valid email and password.");
@@ -28,7 +25,7 @@ const Register = () => {
 
   return (
     <div>
-      <h2>Register</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -44,14 +41,12 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
       {error && <div className="error-message">{error}</div>}
-      {success && (
-        <div className="success-message">Registration successful!</div>
-      )}
+      {success && <div className="success-message">Login successful!</div>}
     </div>
   );
 };
 
-export default Register;
+export default Login;

@@ -5,6 +5,7 @@ import BlogPreview from "./components/BlogPreview";
 import Register from "./pages/Register";
 import CreateBlog from "./pages/CreateBlog";
 import BlogList from "./components/BlogList";
+import Login from "./pages/Login";
 
 // This is sample data. Replace it with data fetched from your API.
 const blogData = [
@@ -50,6 +51,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/create-blog" element={<CreateBlog />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>
