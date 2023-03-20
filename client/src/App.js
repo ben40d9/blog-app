@@ -31,6 +31,7 @@ function App() {
           <nav>
             <Link to="/register">Register</Link>
             <Link to="/create-blog">Create Blog</Link>
+            <Link to="/login">Login</Link>
           </nav>
         </header>
         <Routes>
